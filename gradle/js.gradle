@@ -130,7 +130,7 @@ task testMochaNode(type: NodeTask, dependsOn: prepareMocha) {
 }
 
 npmInstall.dependsOn assembleWeb
-//jsTest.dependsOn testMochaNode
+jsTest.dependsOn testMochaNode
 
 if (!project.hasProperty("teamcity") || project.hasProperty("enable-js-tests")) {
     jsTest.dependsOn testMochaChrome
