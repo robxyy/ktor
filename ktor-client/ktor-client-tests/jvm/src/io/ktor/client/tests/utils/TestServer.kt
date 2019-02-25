@@ -35,6 +35,50 @@ internal fun startServer(): ApplicationEngine {
                     call.respondText("[{id: 4242, path: 'cat.jpg'}]", contentType = ContentType.Application.Json)
                 }
             }
+            route("/benchmarks") {
+                val testData = "{'message': 'Hello World'}"
+
+                /**
+                 * Receive json data-class.
+                 */
+                get("/json") {
+                    call.respondText(testData, ContentType.Application.Json)
+                }
+
+                /**
+                 * Send json data-class.
+                 */
+                post("/json") {
+                    val request = call.receiveText()
+                    check(testData == request)
+                    call.respond(HttpStatusCode.OK, "OK")
+                }
+
+                /**
+                 * Submit url form.
+                 */
+                get("/form-url") {
+                }
+
+                /**
+                 * Submit body form.
+                 */
+                post("/form-body") {
+                }
+
+                /**
+                 * Download file.
+                 */
+                get("/file-download") {
+                }
+
+                /**
+                 * Upload file
+                 */
+                post("/file-upload") {
+                }
+            }
+
         }
     }.start()
 }

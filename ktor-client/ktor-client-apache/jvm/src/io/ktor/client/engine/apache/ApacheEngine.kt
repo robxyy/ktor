@@ -1,5 +1,6 @@
 package io.ktor.client.engine.apache
 
+import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.*
 import io.ktor.client.request.*
@@ -8,6 +9,13 @@ import org.apache.http.impl.nio.reactor.*
 
 private const val MAX_CONNECTIONS_COUNT = 1000
 private const val IO_THREAD_COUNT_DEFAULT = 4
+
+fun x() {
+    HttpClient(Apache) {
+        engine {
+        }
+    }
+}
 
 internal class ApacheEngine(override val config: ApacheEngineConfig) : HttpClientJvmEngine("ktor-apache") {
 

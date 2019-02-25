@@ -70,7 +70,8 @@ task startTestServer(type: KtorTestServer, dependsOn: assemble) {
 
 if (!project.ext.ideaActive) {
     def testTasks = [
-        'macosX64Test', 'linuxX64Test', 'iosTest', 'mingwX64Test', 'jvmTest', 'testMochaChrome', 'testMochaNode'
+        'macosX64Test', 'linuxX64Test', 'iosTest', 'mingwX64Test', 'jvmTest', 'testMochaChrome', 'testMochaNode',
+        'benchmark', 'jvmBenchmark'
     ]
 
     rootProject.allprojects {
