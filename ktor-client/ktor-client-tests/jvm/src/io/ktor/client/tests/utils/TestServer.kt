@@ -3,17 +3,20 @@ package io.ktor.client.tests.utils
 import ch.qos.logback.classic.*
 import io.ktor.application.*
 import io.ktor.http.*
+import io.ktor.http.cio.websocket.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.jetty.*
+import io.ktor.websocket.*
 import org.slf4j.*
 import org.slf4j.Logger
 
 private val DEFAULT_PORT: Int = 8080
 
 internal fun startServer(): ApplicationEngine {
+    println("START SERVER")
     val logger = LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME) as ch.qos.logback.classic.Logger
     logger.level = Level.WARN
 
@@ -77,6 +80,18 @@ internal fun startServer(): ApplicationEngine {
                  */
                 post("/file-upload") {
                 }
+
+                route("/websockets") {
+                    webSocket("/get/{count}") {
+                        println("connected")
+                        val count = call.parameters["count"]!!.toInt()
+
+                        repeat(count) {
+                            send("$it")
+                        }
+                    }
+                }
+
             }
 
         }

@@ -34,6 +34,8 @@ kotlin.sourceSets {
     jvmMain.dependencies {
         api project(':ktor-server:ktor-server-jetty')
         api project(':ktor-server:ktor-server-netty')
+        api project(':ktor-server:ktor-server-netty')
+        api project(':ktor-features:ktor-websockets')
         api group: 'ch.qos.logback', name: 'logback-classic', version: logback_version
         api group: 'junit', name: 'junit', version: junit_version
         api group: 'org.jetbrains.kotlin', name: 'kotlin-test-junit', version: kotlin_version
@@ -82,6 +84,7 @@ if (!project.ext.ideaActive) {
 }
 
 gradle.buildFinished {
+    pritnln("STOP SERVER")
     if (startTestServer.server != null) {
         startTestServer.server.stop(0L, 0L, TimeUnit.MILLISECONDS)
     }

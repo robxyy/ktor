@@ -1,11 +1,9 @@
 package io.ktor.client.features.websocket
 
 import io.ktor.client.*
-import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.http.cio.websocket.*
-import kotlinx.coroutines.*
 
 /**
  * Open [DefaultClientWebSocketSession].
@@ -50,6 +48,19 @@ suspend fun HttpClient.ws(
     method: HttpMethod = HttpMethod.Get, host: String = "localhost", port: Int = DEFAULT_PORT, path: String = "/",
     request: HttpRequestBuilder.() -> Unit = {}, block: suspend DefaultClientWebSocketSession.() -> Unit
 ): Unit = webSocket(method, host, port, path, request, block)
+
+
+/**
+ * Open [DefaultClientWebSocketSession].
+ */
+suspend fun HttpClient.ws(
+    urlString: String,
+    request: HttpRequestBuilder.() -> Unit = {},
+    block: suspend DefaultClientWebSocketSession.() -> Unit
+): Unit {
+    val url = Url(urlString)
+    webSocket(HttpMethod.Get, url.host, url.port, url.encodedPath, request, block)
+}
 
 /**
  * Open secure [DefaultClientWebSocketSession].
