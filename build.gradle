@@ -30,6 +30,8 @@ ext.configuredVersion = project.hasProperty("releaseVersion") ? project.releaseV
 ext.globalM2 = "$buildDir/m2"
 ext.publishLocal = project.hasProperty("publishLocal")
 
+apply plugin: 'kotlinx.team.infra'
+
 apply from: "gradle/experimental.gradle"
 apply from: 'gradle/verifier.gradle'
 

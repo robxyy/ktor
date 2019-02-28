@@ -84,7 +84,6 @@ if (!project.ext.ideaActive) {
 }
 
 gradle.buildFinished {
-    pritnln("STOP SERVER")
     if (startTestServer.server != null) {
         startTestServer.server.stop(0L, 0L, TimeUnit.MILLISECONDS)
     }
