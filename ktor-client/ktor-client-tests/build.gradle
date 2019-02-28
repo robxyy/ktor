@@ -76,11 +76,11 @@ if (!project.ext.ideaActive) {
         'benchmark', 'jvmBenchmark'
     ]
 
-    rootProject.allprojects {
-        it.tasks.findAll { it.name in testTasks }.each { testTask ->
-            testTask.dependsOn startTestServer
-        }
-    }
+//    rootProject.allprojects {
+//        it.tasks.findAll { it.name in testTasks }.each { testTask ->
+//            testTask.dependsOn startTestServer
+//        }
+//    }
 }
 
 gradle.buildFinished {

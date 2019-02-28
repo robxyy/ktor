@@ -1,9 +1,6 @@
 
-apply plugin: 'kotlinx.team.node'
+//apply plugin: 'kotlinx.team.node'
 
-node {
-    version = "$nodejs_version"
-}
 
 //npmInstall.dependsOn prepareNodePackage
 //
@@ -20,16 +17,16 @@ node {
 //    ]
 //}
 
-task installDependencies(type: NpmInstallTask) {
-    packages += [
-        "source-map-support@$source_map_support_version",
-        "mocha@$mocha_version",
-        "mocha-headless-chrome@$mocha_headless_chrome_version",
-        "source-map-support@$source_map_support_version",
-        '--no-save'
-    ]
-
-    if (project.hasProperty("teamcity")) args += [
-        packages += ["mocha-teamcity-reporter@$mocha_teamcity_reporter_version"]
-    ]
-}
+//task installDependencies(type: NpmInstallTask) {
+//    packages += [
+//        "source-map-support@$source_map_support_version",
+//        "mocha@$mocha_version",
+//        "mocha-headless-chrome@$mocha_headless_chrome_version",
+//        "source-map-support@$source_map_support_version",
+//        '--no-save'
+//    ]
+//
+//    if (project.hasProperty("teamcity")) args += [
+//        packages += ["mocha-teamcity-reporter@$mocha_teamcity_reporter_version"]
+//    ]
+//}

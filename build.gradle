@@ -32,6 +32,16 @@ ext.publishLocal = project.hasProperty("publishLocal")
 
 apply plugin: 'kotlinx.team.infra'
 
+infra {
+    node {
+        version = "$nodejs_version"
+        mocha(mocha_version)
+
+        install("text-encoding", "0.7.0")
+        install("node-fetch", "2.3.0")
+    }
+}
+
 apply from: "gradle/experimental.gradle"
 apply from: 'gradle/verifier.gradle'
 
