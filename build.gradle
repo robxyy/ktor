@@ -5,6 +5,7 @@ buildscript {
         mavenLocal()
         jcenter()
         maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://dl.bintray.com/orangy/maven' }
         maven { url "https://dl.bintray.com/jetbrains/kotlin-native-dependencies" }
         maven { url "https://dl.bintray.com/kotlin/kotlin-dev" }
         maven { url 'https://teamcity.jetbrains.com/guestAuth/repository/download/KotlinTools_GradleBenchmarks_Build_All/.lastSuccessful/maven' }
@@ -14,7 +15,8 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
-        classpath "org.jetbrains.gradle.benchmarks:benchmarks.plugin:0.1.7"
+        classpath "org.jetbrains.gradle.benchmarks:benchmarks.plugin:$benchmark_plugin"
+        classpath "kotlinx.team:kotlinx.team.infra:$infra_plugin"
         classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:$bintray_plugin_version"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
         classpath "org.jetbrains.kotlinx:atomicfu-gradle-plugin:$atomic_fu_version"
@@ -71,6 +73,7 @@ allprojects {
         maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
         maven { url "https://dl.bintray.com/kotlin/kotlin-dev" }
         maven { url 'https://teamcity.jetbrains.com/guestAuth/repository/download/KotlinTools_GradleBenchmarks_Build_All/.lastSuccessful/maven' }
+        maven { url 'https://dl.bintray.com/orangy/maven' }
         jcenter()
     }
 

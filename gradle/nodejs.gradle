@@ -1,44 +1,35 @@
-apply plugin: 'com.moowork.node'
+
+apply plugin: 'kotlinx.team.node'
 
 node {
     version = "$nodejs_version"
-    npmVersion = "$npm_version"
-
-    download = true
-    nodeModulesDir = file(buildDir)
-    workDir = file("${project.buildDir}/nodejs")
 }
 
-repositories.whenObjectAdded {
-    if (it instanceof IvyArtifactRepository) {
-        metadataSources {
-            artifact()
-        }
-    }
-}
+//npmInstall.dependsOn prepareNodePackage
+//
+//task installDependenciesMocha(type: NpmTask, dependsOn: npmInstall) {
+//    args = [
+//        'install',
+//        "mocha@$mocha_version",
+//        "mocha-headless-chrome@$mocha_headless_chrome_version",
+//        "source-map-support@$source_map_support_version",
+//        '--no-save'
+//    ]
+//    if (project.hasProperty("teamcity")) args += [
+//        "mocha-teamcity-reporter@$mocha_teamcity_reporter_version"
+//    ]
+//}
 
-task prepareNodePackage(type: Copy) {
-    from("npm") {
-        include 'package.json'
-        expand(project.properties + [kotlinDependency: ""])
-    }
-    from("npm") {
-        exclude 'package.json'
-    }
-    into "$node.nodeModulesDir"
-}
-
-npmInstall.dependsOn prepareNodePackage
-
-task installDependenciesMocha(type: NpmTask, dependsOn: npmInstall) {
-    args = [
-        'install',
+task installDependencies(type: NpmInstallTask) {
+    packages += [
+        "source-map-support@$source_map_support_version",
         "mocha@$mocha_version",
         "mocha-headless-chrome@$mocha_headless_chrome_version",
         "source-map-support@$source_map_support_version",
         '--no-save'
     ]
+
     if (project.hasProperty("teamcity")) args += [
-        "mocha-teamcity-reporter@$mocha_teamcity_reporter_version"
+        packages += ["mocha-teamcity-reporter@$mocha_teamcity_reporter_version"]
     ]
 }
