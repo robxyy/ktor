@@ -40,7 +40,7 @@ fun ldapAuthenticate(
 
     val configurator: (MutableMap<String, Any?>) -> Unit = { env ->
         env[Context.SECURITY_AUTHENTICATION] = "simple"
-        env[Context.SECURITY_PRINCIPAL] = userDNFormat.format(credential.name)
+        env[Context.SECURITY_PRINCIPAL] = userDNFormat.format(ldapEscape(credential.name))
         env[Context.SECURITY_CREDENTIALS] = credential.password
     }
 
@@ -68,4 +68,40 @@ private fun ldapLogin(ldapURL: String, ldapEnvironmentBuilder: (MutableMap<Strin
     return InitialDirContext(env)
 }
 
+private val ESCAPE_CHARACTERS = charArrayOf(' ', '"', '#', '+', ',', ';', '<', '=', '>', '\\')
+
+private fun ldapEscape(string: String): String {
+    for (index in 0 .. string.lastIndex) {
+        val character = string[index]
+        if (character in ESCAPE_CHARACTERS || !character.isLetterOrDigit()) {
+            return ldapEscapeImpl(string, index)
+        }
+    }
+
+    return string
+}
+
+private fun ldapEscapeImpl(string: String, firstIndex: Int): String = buildString {
+    var lastIndex = 0
+    for (index in firstIndex .. string.lastIndex) {
+        val character = string[index]
+        if (character in ESCAPE_CHARACTERS) {
+            append(string, lastIndex, index)
+            append('\\')
+            append(character)
+            lastIndex = index + 1
+        } else if (!character.isLetterOrDigit()) {
+            append(string, lastIndex, index)
+            character.toString().toByteArray().let { encoded ->
+                for (byteIndex in 0 until encoded.size) {
+                    val unsignedValue = encoded[byteIndex].toInt() and 0xff
+                    append('\\')
+                    append(unsignedValue.toString(16).padStart(2, '0'))
+                }
+            }
+        }
+    }
+
+    append(string, lastIndex, string.length)
+}
 
